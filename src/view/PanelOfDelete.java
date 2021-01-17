@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -15,7 +16,12 @@ public class PanelOfDelete extends JPanel {
     private Font font = new Font("Tahoma", Font.BOLD, 15);
     private JTextArea textArea;
     private JButton delete = new JButton("Delete"),
-        cancel = new JButton("Cancel");
+            cancel = new JButton("Cancel");
+    private PanelOfChoseOfCatalog panel;
+
+    public void setPanel(PanelOfChoseOfCatalog panel) {
+        this.panel = panel;
+    }
 
     public PanelOfDelete() {
         setLayout(null);
@@ -24,23 +30,29 @@ public class PanelOfDelete extends JPanel {
         textArea.setText(text);
         textArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setBounds(10,40,370,100);
+        scrollPane.setBounds(10, 40, 370, 100);
         add(scrollPane);
+
         // добавляем кнопку Delete
-        delete.setBounds(100,150,100,50);
+        delete.setBounds(100, 150, 100, 50);
         delete.setFont(font);
-        delete.setPreferredSize(new Dimension(50,50));
+        delete.setPreferredSize(new Dimension(50, 50));
         delete.setActionCommand("delete");
-//        ActionListener deleteListener = new ButtonsListener();
-//        delete.addActionListener(deleteListener);
+        ActionListener listener = new ButtonsListener();
+        delete.addActionListener(listener);
         add(delete);
 
         // добавляем кнопку Cancel
-        cancel.setBounds(205,150,100,50);
+        cancel.setBounds(205, 150, 100, 50);
         cancel.setFont(font);
         cancel.setActionCommand("cancel");
         add(cancel);
     }
+
+//    public PanelOfDelete(File fileChooser) {
+//        this.fileChooser = fileChooser;
+//    }
+
     public String getText() {
         return text;
     }
@@ -49,11 +61,22 @@ public class PanelOfDelete extends JPanel {
         this.text = text;
     }
 
-//    public class ButtonsListener implements ActionListener {
-//        @Override
-//        public void actionPerformed(ActionEvent e) {
-//            if (e.getActionCommand().equals("delete") & fileChooser.getSelectedFile()!= null) {
-//                textArea.setText("Удаляем файлы: ");
+    public JButton getDelete() {
+        return delete;
+    }
+
+    public JButton getCancel() {
+        return cancel;
+    }
+
+    public class ButtonsListener implements ActionListener {
+        JFileChooser fileChooser;
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println(panel.getFileChooser());
+            fileChooser = panel.getFileChooser();
+            if (e.getActionCommand().equals("delete") & fileChooser.getSelectedFile() != null) {
+                textArea.setText("Удаляем файлы: ");
 //                /*try {
 //                    deleteFromCatalog(fileChooser.getSelectedFile());
 //                } catch (IOException ioException) {
@@ -75,9 +98,9 @@ public class PanelOfDelete extends JPanel {
 //            if (e.getActionCommand().equals("cancel")) {
 //
 //            }
-//        }
-//    }
-    // метод удаления файлов в выбранной папке и ее подпапках
+            }
+        }
+        // метод удаления файлов в выбранной папке и ее подпапках
     /*public void deleteFromCatalog(File file) throws IOException {
         File[] files = file.listFiles();
         for (File iter : files) {
@@ -89,4 +112,5 @@ public class PanelOfDelete extends JPanel {
             }
         }
     }*/
+    }
 }
