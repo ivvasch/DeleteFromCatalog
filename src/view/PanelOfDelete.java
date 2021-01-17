@@ -13,7 +13,6 @@ public class PanelOfDelete extends JPanel {
 
     private String text = "Default";
     private Font font = new Font("Tahoma", Font.BOLD, 15);
-    private JTextField textField = new JTextField("Выберите каталог из которого будут удалены все файлы: ");
     private JTextArea textArea;
     private JButton delete = new JButton("Delete"),
         cancel = new JButton("Cancel");
