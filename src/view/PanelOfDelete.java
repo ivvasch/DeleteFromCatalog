@@ -14,61 +14,33 @@ public class PanelOfDelete extends JPanel {
     private String text = "Default";
     private Font font = new Font("Tahoma", Font.BOLD, 15);
     private JTextField textField = new JTextField("Выберите каталог из которого будут удалены все файлы: ");
-    private JTextField inform = new JTextField();
     private JTextArea textArea;
-    private JFileChooser fileChooser = null;
     private JButton delete = new JButton("Delete"),
-    cancel = new JButton("Cancel"),
-    explorer = new JButton("...");
-
+        cancel = new JButton("Cancel");
 
     public PanelOfDelete() {
         setLayout(null);
-
+        setPreferredSize(new Dimension(310, 210));
+        textArea = new JTextArea();
+        textArea.setText(text);
+        textArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(textArea);
+        scrollPane.setBounds(10,40,370,100);
+        add(scrollPane);
         // добавляем кнопку Delete
-        delete.setBounds(100,200,100,50);
+        delete.setBounds(100,150,100,50);
         delete.setFont(font);
+        delete.setPreferredSize(new Dimension(50,50));
         delete.setActionCommand("delete");
-        ActionListener deleteListener = new ButtonsListener();
-        delete.addActionListener(deleteListener);
+//        ActionListener deleteListener = new ButtonsListener();
+//        delete.addActionListener(deleteListener);
         add(delete);
 
         // добавляем кнопку Cancel
-        cancel.setBounds(210,200,100,50);
+        cancel.setBounds(205,150,100,50);
         cancel.setFont(font);
         cancel.setActionCommand("cancel");
         add(cancel);
-
-        //добавляем кнопку выбора папки
-        explorer.setFont(font);
-        explorer.setBounds(330, 20, 50, 50);
-        explorer.setActionCommand("explorer");
-        ActionListener explorerListener = new ButtonsListener();
-        explorer.addActionListener(explorerListener);
-        fileChooser = new JFileChooser();
-        add(explorer);
-
-        // добавляем информационное поле выбора папки
-        textField.setBounds(10,20,310,50);
-        textField.setEditable(false);
-        textField.setFont(new Font("Tahoma", Font.ITALIC, 12));
-        ActionListener listener = new ButtonsListener();
-        textField.addActionListener(listener);
-        add(textField);
-
-        // добавляем информационное поле
-//        inform.setBounds(10,80,370,100);
-//        inform.setEditable(false);
-//        inform.setFont(new Font("SanSerif", Font.ITALIC,17));
-//        ActionListener informListener = new ButtonsListener();
-//        inform.addActionListener(informListener);
-//        inform.setText(text);
-        textArea = new JTextArea(10,20);
-        setLayout(new BorderLayout());
-        textArea.setText(text);
-        textArea.setCaretPosition(0);
-        JScrollPane scrollPane = new JScrollPane(textArea);
-        add(scrollPane, BorderLayout.CENTER);
     }
     public String getText() {
         return text;
@@ -78,50 +50,34 @@ public class PanelOfDelete extends JPanel {
         this.text = text;
     }
 
-    public JTextField getTextField() {
-        return textField;
-    }
-
-    public void setTextField(JTextField textField) {
-        this.textField = textField;
-    }
-
-    public JTextField getInform() {
-        return inform;
-    }
-
-    public void setInform(JTextField inform) {
-        this.inform = inform;
-    }
-
-    public class ButtonsListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getActionCommand().equals("delete") & fileChooser.getSelectedFile()!= null) {
-                textArea.setText("Удаляем файлы: ");
-                /*try {
-                    deleteFromCatalog(fileChooser.getSelectedFile());
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }*/
-                delete.setEnabled(false);
-
-            }
-            if (e.getActionCommand().equals("explorer")) {
-                fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                int result = fileChooser.showOpenDialog(PanelOfDelete.this);
-
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    JOptionPane.showMessageDialog(PanelOfDelete.this, fileChooser.getSelectedFile());
-                    textField.setText(String.valueOf(fileChooser.getSelectedFile()));
-                    delete.setEnabled(true);
-                }
-            }
-            if (e.getActionCommand().equals("cancel")) {
-
-            }
-        }
-    }
+//    public class ButtonsListener implements ActionListener {
+//        @Override
+//        public void actionPerformed(ActionEvent e) {
+//            if (e.getActionCommand().equals("delete") & fileChooser.getSelectedFile()!= null) {
+//                textArea.setText("Удаляем файлы: ");
+//                /*try {
+//                    deleteFromCatalog(fileChooser.getSelectedFile());
+//                } catch (IOException ioException) {
+//                    ioException.printStackTrace();
+//                }*/
+//                delete.setEnabled(false);
+//
+//            }
+//            if (e.getActionCommand().equals("explorer")) {
+//                fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+//                int result = fileChooser.showOpenDialog(PanelOfDelete.this);
+//
+//                if (result == JFileChooser.APPROVE_OPTION) {
+//                    JOptionPane.showMessageDialog(PanelOfDelete.this, fileChooser.getSelectedFile());
+//                    textField.setText(String.valueOf(fileChooser.getSelectedFile()));
+//                    delete.setEnabled(true);
+//                }
+//            }
+//            if (e.getActionCommand().equals("cancel")) {
+//
+//            }
+//        }
+//    }
     // метод удаления файлов в выбранной папке и ее подпапках
     /*public void deleteFromCatalog(File file) throws IOException {
         File[] files = file.listFiles();
