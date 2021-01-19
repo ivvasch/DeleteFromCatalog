@@ -17,6 +17,8 @@ public class PanelOfDelete extends JPanel {
     private JTextArea textArea;
     private JButton delete = new JButton("Delete"),
             cancel = new JButton("Cancel");
+    private JProgressBar progressBar;
+    private int countProgressBar = 0;
     private PanelOfChoseOfCatalog panel;
 
     public void setPanel(PanelOfChoseOfCatalog panel) {
@@ -26,6 +28,16 @@ public class PanelOfDelete extends JPanel {
     public PanelOfDelete() {
         setLayout(null);
         setPreferredSize(new Dimension(310, 210));
+        // добавляем прогрессбар
+        progressBar = new JProgressBar();
+        progressBar.setStringPainted(true);
+        progressBar.setMinimum(0);
+        progressBar.setMaximum(100);
+        progressBar.setValue(countProgressBar);
+        add(progressBar);
+
+
+        // добавляем окно вывода удаляемых файлов
         textArea = new JTextArea();
         textArea.setText(text);
         textArea.setEditable(false);
@@ -69,14 +81,24 @@ public class PanelOfDelete extends JPanel {
         return cancel;
     }
 
+    public int getCountProgressBar() {
+        return countProgressBar;
+    }
+
+    public void setCountProgressBar(int countProgressBar) {
+        this.countProgressBar = countProgressBar;
+    }
+
     public class ButtonsListener implements ActionListener {
         JFileChooser fileChooser;
+
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println(panel.getFileChooser());
             fileChooser = panel.getFileChooser();
             if (e.getActionCommand().equals("delete") & fileChooser.getSelectedFile() != null) {
                 textArea.setText("Удаляем файлы: ");
+                setCountProgressBar(countProgressBar);
 //                /*try {
 //                    deleteFromCatalog(fileChooser.getSelectedFile());
 //                } catch (IOException ioException) {
@@ -109,6 +131,8 @@ public class PanelOfDelete extends JPanel {
             } else {
                 inform.setText("Удаляем файл: " + (iter.getName()));
                 Files.delete(iter.toPath());
+                countProgressBar = countProgressBar + countProgressBar;
+
             }
         }
     }*/
