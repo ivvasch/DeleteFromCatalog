@@ -6,9 +6,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Method;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PanelOfDelete extends JPanel {
 
@@ -30,11 +32,17 @@ public class PanelOfDelete extends JPanel {
         setPreferredSize(new Dimension(310, 210));
         // добавляем прогрессбар
         progressBar = new JProgressBar();
+        progressBar.setBounds(10, 30, 370, 20);
         progressBar.setStringPainted(true);
         progressBar.setMinimum(0);
-        progressBar.setMaximum(100);
-        progressBar.setValue(countProgressBar);
+//        progressBar.setMaximum(10);
+        int count = 1;
         add(progressBar);
+//        while (count != getCountProgressBar()) {
+//            if (count == getCountProgressBar())
+//            progressBar.setValue(getCountProgressBar());
+//        }
+//        progressBar.setVisible(true);
 
 
         // добавляем окно вывода удаляемых файлов
@@ -42,7 +50,7 @@ public class PanelOfDelete extends JPanel {
         textArea.setText(text);
         textArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setBounds(10, 40, 370, 100);
+        scrollPane.setBounds(10, 60, 370, 80);
         add(scrollPane);
 
         // добавляем кнопку Delete
@@ -91,6 +99,7 @@ public class PanelOfDelete extends JPanel {
 
     public class ButtonsListener implements ActionListener {
         JFileChooser fileChooser;
+        List<Path> fileList = new ArrayList<Path>();
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -98,12 +107,20 @@ public class PanelOfDelete extends JPanel {
             fileChooser = panel.getFileChooser();
             if (e.getActionCommand().equals("delete") & fileChooser.getSelectedFile() != null) {
                 textArea.setText("Удаляем файлы: ");
-                setCountProgressBar(countProgressBar);
-//                /*try {
-//                    deleteFromCatalog(fileChooser.getSelectedFile());
-//                } catch (IOException ioException) {
-//                    ioException.printStackTrace();
-//                }*/
+                try {
+                    deleteFromCatalog(fileChooser.getSelectedFile());
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+                progressBar.setMaximum(fileList.size());
+                for (int i = 0; i < fileList.size(); i++) {
+                    textArea.setText("Удаляем файл: " + (fileList.get(i)));
+//                    разкоментировать после всех проверок.
+//                Files.delete(iter.toPath());
+                    System.out.println((fileList.get(i)));
+                            progressBar.setValue(i+1);
+
+                }
 //                delete.setEnabled(false);
 //
 //            }
@@ -123,18 +140,15 @@ public class PanelOfDelete extends JPanel {
             }
         }
         // метод удаления файлов в выбранной папке и ее подпапках
-    /*public void deleteFromCatalog(File file) throws IOException {
+    public void deleteFromCatalog(File file) throws IOException {
         File[] files = file.listFiles();
         for (File iter : files) {
             if (Files.isDirectory(Paths.get(String.valueOf(iter)))) {
                 deleteFromCatalog(iter);
             } else {
-                inform.setText("Удаляем файл: " + (iter.getName()));
-                Files.delete(iter.toPath());
-                countProgressBar = countProgressBar + countProgressBar;
-
+                fileList.add(iter.toPath());
             }
         }
-    }*/
-    }
+     }
+  }
 }
