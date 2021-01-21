@@ -9,7 +9,7 @@ public class PanelOfChoseOfCatalog extends JPanel {
     private JButton explorer = new JButton("...");
     private JFileChooser fileChooser = null;
     private Font font = new Font("Tahoma", Font.BOLD, 15);
-    private JTextField textField = new JTextField();
+    private JTextField textField = new JTextField("Выберите каталог...");
     private PanelOfDelete panel;
 
 
@@ -53,7 +53,6 @@ public class PanelOfChoseOfCatalog extends JPanel {
                 if (result == JFileChooser.APPROVE_OPTION) {
                     JOptionPane.showMessageDialog(PanelOfChoseOfCatalog.this, fileChooser.getSelectedFile());
                     textField.setText(String.valueOf(fileChooser.getSelectedFile()));
-                    panel.setText("jsdkfja;lfkj;as");
                     panel.getDelete().setEnabled(true);
                     panel.getTextArea().selectAll();
                     panel.getTextArea().replaceSelection("Удаляем файлы: ");
