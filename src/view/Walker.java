@@ -25,6 +25,19 @@ public class Walker implements Runnable{
         try {
             fileList = new ArrayList<>();
             deleteFromCatalog(rootDirectory);
+            progressBar.setMaximum(fileList.size());
+            for (int i = 0; i < fileList.size(); i++) {
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException interruptedException) {
+                    interruptedException.printStackTrace();
+                }
+                textArea.append("\n" + (fileList.get(i).getFileName()));
+//                    разкоментировать после всех проверок.
+//                Files.del--ete(iter.toPath());
+                System.out.println((fileList.size()));
+                progressBar.setValue(i + 1);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,19 +53,6 @@ public class Walker implements Runnable{
                 fileList.add(iter.toPath());
                 System.out.println(iter.toPath());
             }
-        }
-        progressBar.setMaximum(fileList.size());
-        for (int i = 0; i < fileList.size(); i++) {
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException interruptedException) {
-                interruptedException.printStackTrace();
-            }
-            textArea.append("\n" + (fileList.get(i).getFileName()));
-//                    разкоментировать после всех проверок.
-//                Files.del--ete(iter.toPath());
-//            System.out.println((fileList.get(i)));
-            progressBar.setValue(i + 1);
         }
     }
 }
