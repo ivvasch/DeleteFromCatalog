@@ -12,6 +12,16 @@ import java.util.List;
 public class Walker implements Runnable{
     private JTextArea textArea;
     private File rootDirectory;
+    private boolean flag;
+
+    public Walker() {
+
+    }
+
+    void disable() {
+        flag = true;
+    }
+
     List<Path> fileList;
     private ProgressBar progressBar;
 
@@ -22,25 +32,29 @@ public class Walker implements Runnable{
     }
     @Override
     public void run() {
+              fileList = new ArrayList<>();
         try {
-            fileList = new ArrayList<>();
             deleteFromCatalog(rootDirectory);
-            progressBar.setMaximum(fileList.size());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        progressBar.setMaximum(fileList.size());
             for (int i = 0; i < fileList.size(); i++) {
+                if (flag) {
+                        System.out.println(" Прерывание --- ");
+                        break;
+                }
                 try {
-                    Thread.sleep(50);
+                    Thread.sleep(1000);
                 } catch (InterruptedException interruptedException) {
                     interruptedException.printStackTrace();
                 }
                 textArea.append("\n" + (fileList.get(i).getFileName()));
 //                    разкоментировать после всех проверок.
 //                Files.del--ete(iter.toPath());
-                System.out.println((fileList.size()));
                 progressBar.setValue(i + 1);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.out.println((fileList.size()));
     }
 
     // метод удаления файлов в выбранной папке и ее подпапках
