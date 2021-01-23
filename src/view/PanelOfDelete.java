@@ -67,6 +67,10 @@ public class PanelOfDelete extends JPanel {
         return delete;
     }
 
+    public ProgressBar getProgressBar() {
+        return progressBar;
+    }
+
     public Walker getWalker() {
         return walker;
     }

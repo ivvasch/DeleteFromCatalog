@@ -54,6 +54,7 @@ public class PanelOfChoseOfCatalog extends JPanel {
                     JOptionPane.showMessageDialog(PanelOfChoseOfCatalog.this, fileChooser.getSelectedFile());
                     textField.setText(String.valueOf(fileChooser.getSelectedFile()));
                     panel.getDelete().setEnabled(true);
+                    panel.getProgressBar().setValue(0);
                     panel.getTextArea().selectAll();
                     panel.getTextArea().replaceSelection("Удаляем файлы: ");
                 }

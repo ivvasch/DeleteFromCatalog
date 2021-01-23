@@ -14,10 +14,6 @@ public class Walker implements Runnable{
     private File rootDirectory;
     private boolean flag;
 
-    public Walker() {
-
-    }
-
     void disable() {
         flag = true;
     }
