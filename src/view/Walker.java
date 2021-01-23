@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Walker implements Runnable{
-    private JTextArea textArea;
-    private File rootDirectory;
+    private final JTextArea textArea;
+    private final File rootDirectory;
     private boolean flag;
 
     void disable() {
@@ -19,7 +19,7 @@ public class Walker implements Runnable{
     }
 
     List<Path> fileList;
-    private ProgressBar progressBar;
+    private final ProgressBar progressBar;
 
     public Walker(JTextArea textArea, File rootDirectory, ProgressBar progressBar) {
         this.textArea = textArea;
@@ -56,6 +56,7 @@ public class Walker implements Runnable{
     // метод удаления файлов в выбранной папке и ее подпапках
     public void deleteFromCatalog(File file) throws IOException {
         File[] files = file.listFiles();
+        assert files != null;
         for (File iter : files) {
             if (Files.isDirectory(Paths.get(String.valueOf(iter)))) {
                 deleteFromCatalog(iter);
