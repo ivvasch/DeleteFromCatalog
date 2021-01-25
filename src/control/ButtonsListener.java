@@ -28,7 +28,6 @@ public class ButtonsListener implements ActionListener {
             thread = new Thread(walker);
             thread.start();
             panelOfDelete.getDelete().setEnabled(false);
-            panelOfDelete.setWalker(walker);
             panelOfDelete.setFlag(true);
         }
     }

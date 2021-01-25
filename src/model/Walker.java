@@ -11,7 +11,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Walker implements Runnable{
+public class Walker implements Runnable {
     private final JTextArea textArea;
     private final File rootDirectory;
     private boolean flag;
@@ -28,30 +28,31 @@ public class Walker implements Runnable{
         this.rootDirectory = rootDirectory;
         this.progressBar = progressBar;
     }
+
     @Override
     public void run() {
-              fileList = new ArrayList<>();
+        fileList = new ArrayList<>();
         try {
             deleteFromCatalog(rootDirectory);
         } catch (IOException e) {
             e.printStackTrace();
         }
         progressBar.setMaximum(fileList.size());
-            for (int i = 0; i < fileList.size(); i++) {
-                if (flag) {
-                        System.out.println(" Прерывание --- ");
-                        break;
-                }
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException interruptedException) {
-                    interruptedException.printStackTrace();
-                }
-                textArea.append("\n" + (fileList.get(i).getFileName()));
+        for (int i = 0; i < fileList.size(); i++) {
+            if (flag) {
+                System.out.println(" Прерывание --- ");
+                break;
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException interruptedException) {
+                interruptedException.printStackTrace();
+            }
+            textArea.append("\n" + (fileList.get(i).getFileName()));
 //                    разкоментировать после всех проверок.
 //                Files.del--ete(iter.toPath());
-                progressBar.setValue(i + 1);
-            }
+            progressBar.setValue(i + 1);
+        }
         System.out.println((fileList.size()));
     }
 

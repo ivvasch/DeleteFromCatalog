@@ -10,14 +10,14 @@ import java.awt.event.ActionListener;
 
 public class PanelOfDelete extends JPanel {
 
-    private Walker walker;
     private boolean flag = false;
     private Font font = new Font("Tahoma", Font.BOLD, 15);
     private JTextArea textArea;
     private JButton delete = new JButton("Delete"),
-    cancel = new JButton("Cancel");
+            cancel = new JButton("Cancel");
     private ProgressBar progressBar;
     private PanelOfChoseOfCatalog panel;
+
     public PanelOfDelete() {
         setLayout(null);
         setPreferredSize(new Dimension(310, 210));
@@ -58,33 +58,29 @@ public class PanelOfDelete extends JPanel {
     public void setPanel(PanelOfChoseOfCatalog panel) {
         this.panel = panel;
     }
+
     public PanelOfChoseOfCatalog getPanel() {
         return panel;
     }
+
     public boolean isFlag() {
         return flag;
     }
+
     public void setFlag(boolean flag) {
         this.flag = flag;
     }
+
     public JButton getDelete() {
         return delete;
     }
+
     public ProgressBar getProgressBar() {
         return progressBar;
     }
-    public Walker getWalker() {
-        return walker;
-    }
-    public void setWalker(Walker walker) {
-        this.walker = walker;
-    }
+
     public JTextArea getTextArea() {
         return textArea;
     }
 //    ================================ end Getters & Setters ====================================
-
-//    ============================== end ButtonListener "delete" =============================
-
-//    ================================= end ButtonListener "cancel" ============================
 }

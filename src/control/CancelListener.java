@@ -5,7 +5,6 @@ import view.PanelOfDelete;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-//    ------------------------------ start ButtonListener "cancel" ---------------------------
 public class CancelListener implements ActionListener {
 
     private ButtonsListener buttonsListener;
