@@ -1,8 +1,11 @@
 package view;
 
+import control.ButtonsListener;
+import control.CancelListener;
+import model.Walker;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PanelOfDelete extends JPanel {
@@ -15,10 +18,6 @@ public class PanelOfDelete extends JPanel {
     cancel = new JButton("Cancel");
     private ProgressBar progressBar;
     private PanelOfChoseOfCatalog panel;
-    public void setPanel(PanelOfChoseOfCatalog panel) {
-        this.panel = panel;
-    }
-
     public PanelOfDelete() {
         setLayout(null);
         setPreferredSize(new Dimension(310, 210));
@@ -42,7 +41,7 @@ public class PanelOfDelete extends JPanel {
         delete.setFont(font);
         delete.setPreferredSize(new Dimension(50, 50));
         delete.setActionCommand("delete");
-        ActionListener listener = new ButtonsListener();
+        ActionListener listener = new ButtonsListener(this);
         delete.addActionListener(listener);
         add(delete);
 
@@ -50,71 +49,42 @@ public class PanelOfDelete extends JPanel {
         cancel.setBounds(205, 150, 100, 50);
         cancel.setFont(font);
         cancel.setActionCommand("cancel");
-        ActionListener cancelListener = new CancelListener();
+        ActionListener cancelListener = new CancelListener(this, (ButtonsListener) listener);
         cancel.addActionListener(cancelListener);
         add(cancel);
     }
-// ---------------------------------- start Getters & Setters ------------------------------------
+
+    // ---------------------------------- start Getters & Setters ------------------------------------
+    public void setPanel(PanelOfChoseOfCatalog panel) {
+        this.panel = panel;
+    }
+    public PanelOfChoseOfCatalog getPanel() {
+        return panel;
+    }
     public boolean isFlag() {
         return flag;
     }
-
     public void setFlag(boolean flag) {
         this.flag = flag;
     }
-
     public JButton getDelete() {
         return delete;
     }
-
     public ProgressBar getProgressBar() {
         return progressBar;
     }
-
     public Walker getWalker() {
         return walker;
     }
-
     public void setWalker(Walker walker) {
         this.walker = walker;
     }
-
     public JTextArea getTextArea() {
         return textArea;
     }
-
 //    ================================ end Getters & Setters ====================================
 
-//    ------------------------------ start ButtonListener "delete" ------------------------------
-    public class ButtonsListener implements ActionListener {
-        JFileChooser fileChooser;
-        Thread thread;
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            System.out.println(panel.getFileChooser());
-            fileChooser = panel.getFileChooser();
-            if (e.getActionCommand().equals("delete") & fileChooser.getSelectedFile() != null) {
-                textArea.setText("Удаляем файлы: ");
-                walker = new Walker(textArea, fileChooser.getSelectedFile(), progressBar);
-                thread = new Thread(walker);
-                thread.start();
-                delete.setEnabled(false);
-                setWalker(walker);
-                setFlag(true);
-            }
-        }
-    }
 //    ============================== end ButtonListener "delete" =============================
 
-//    ------------------------------ start ButtonListener "cancel" ---------------------------
-    public class CancelListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getActionCommand().equals("cancel") & isFlag()) {
-                getWalker().disable();
-            }
-        }
-    }
 //    ================================= end ButtonListener "cancel" ============================
 }

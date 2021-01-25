@@ -1,8 +1,9 @@
 package view;
 
+import control.ChooseListener;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PanelOfChoseOfCatalog extends JPanel {
@@ -21,7 +22,7 @@ public class PanelOfChoseOfCatalog extends JPanel {
         textField.setBounds(10,20,310,50);
         textField.setEditable(false);
         textField.setFont(new Font("Tahoma", Font.ITALIC, 12));
-        ActionListener listener = new ChooseListener();
+        ActionListener listener = new ChooseListener(this);
         textField.addActionListener(listener);
         fileChooser = new JFileChooser();
         add(textField);
@@ -30,7 +31,7 @@ public class PanelOfChoseOfCatalog extends JPanel {
         explorer.setBounds(330, 20,50,50);
         explorer.setFont(font);
         explorer.setActionCommand("explorer");
-        ActionListener explorerListener = new ChooseListener();
+        ActionListener explorerListener = new ChooseListener(this);
         explorer.addActionListener(explorerListener);
         add(explorer);
     }
@@ -41,26 +42,11 @@ public class PanelOfChoseOfCatalog extends JPanel {
     public void setPanel(PanelOfDelete panel) {
         this.panel = panel;
     }
-
-    public class ChooseListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (e.getActionCommand().equals("explorer")) {
-                fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                int result = fileChooser.showOpenDialog(PanelOfChoseOfCatalog.this);
-
-                if (result == JFileChooser.APPROVE_OPTION) {
-                    JOptionPane.showMessageDialog(PanelOfChoseOfCatalog.this, fileChooser.getSelectedFile());
-                    textField.setText(String.valueOf(fileChooser.getSelectedFile()));
-                    panel.getDelete().setEnabled(true);
-                    panel.getProgressBar().setValue(0);
-                    panel.getTextArea().selectAll();
-                    panel.getTextArea().replaceSelection("Удаляем файлы: ");
-                }
-            }
-
-        }
+    public PanelOfDelete getPanel() {
+        return panel;
+    }
+    public JTextField getTextField() {
+        return textField;
     }
 
 }

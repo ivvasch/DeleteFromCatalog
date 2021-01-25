@@ -1,4 +1,6 @@
-package view;
+package model;
+
+import view.ProgressBar;
 
 import javax.swing.*;
 import java.io.File;
@@ -14,7 +16,7 @@ public class Walker implements Runnable{
     private final File rootDirectory;
     private boolean flag;
 
-    void disable() {
+    public void disable() {
         flag = true;
     }
 
