@@ -16,7 +16,7 @@ public class ViewFrameDeleteFromCatalog {
     private PanelOfDelete jPanelDelete;
 
     public ViewFrameDeleteFromCatalog() {
-        frame = new JFrame("Удалитель файлов");
+        frame = new JFrame("DeleteFrom");
         frame.setSize(405, 300);
         frame.setLayout(new BorderLayout());
         jPanelChooseCatalog = new PanelOfChoseOfCatalog();

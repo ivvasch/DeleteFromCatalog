@@ -40,23 +40,22 @@ public class Walker implements Runnable {
         progressBar.setMaximum(fileList.size());
         for (int i = 0; i < fileList.size(); i++) {
             if (flag) {
-                System.out.println(" Прерывание --- ");
+                textArea.setText("Удалено в каталогах и подкаталогах " + fileList.size() + " файлов!");
                 break;
             }
             try {
-                Thread.sleep(1000);
-            } catch (InterruptedException interruptedException) {
+                textArea.append("\n" + (fileList.get(i).getFileName()));
+                Files.delete(fileList.get(i));
+                progressBar.setValue(i + 1);
+            } catch (IOException interruptedException) {
                 interruptedException.printStackTrace();
             }
-            textArea.append("\n" + (fileList.get(i).getFileName()));
-//                    разкоментировать после всех проверок.
-//                Files.del--ete(iter.toPath());
-            progressBar.setValue(i + 1);
         }
-        System.out.println((fileList.size()));
+        textArea.setText("В каталоге и подкаталогах, выбранной папки удалены все \nфайлы." +
+                " Всего удалено: " + fileList.size() + " файлов!");
     }
 
-    // метод удаления файлов в выбранной папке и ее подпапках
+    // метод нахождения файлов в выбранной папке и ее подпапках, сохраняем в список для последующего удаления
     public void deleteFromCatalog(File file) throws IOException {
         File[] files = file.listFiles();
         assert files != null;
@@ -65,7 +64,6 @@ public class Walker implements Runnable {
                 deleteFromCatalog(iter);
             } else {
                 fileList.add(iter.toPath());
-                System.out.println(iter.toPath());
             }
         }
     }

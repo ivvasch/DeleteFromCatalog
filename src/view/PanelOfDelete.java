@@ -2,7 +2,6 @@ package view;
 
 import control.ButtonsListener;
 import control.CancelListener;
-import model.Walker;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,11 +10,10 @@ import java.awt.event.ActionListener;
 public class PanelOfDelete extends JPanel {
 
     private boolean flag = false;
-    private Font font = new Font("Tahoma", Font.BOLD, 15);
-    private JTextArea textArea;
-    private JButton delete = new JButton("Delete"),
-            cancel = new JButton("Cancel");
-    private ProgressBar progressBar;
+    private final JTextArea textArea;
+    private final JButton delete = new JButton("Delete");
+    private final JButton cancel = new JButton("Cancel");
+    private final ProgressBar progressBar;
     private PanelOfChoseOfCatalog panel;
 
     public PanelOfDelete() {
@@ -38,10 +36,11 @@ public class PanelOfDelete extends JPanel {
 
         // добавляем кнопку Delete
         delete.setBounds(100, 150, 100, 50);
+        Font font = new Font("Tahoma", Font.BOLD, 15);
         delete.setFont(font);
         delete.setPreferredSize(new Dimension(50, 50));
         delete.setActionCommand("delete");
-        ActionListener listener = new ButtonsListener(this);
+        ButtonsListener listener = new ButtonsListener(this);
         delete.addActionListener(listener);
         add(delete);
 
@@ -49,7 +48,7 @@ public class PanelOfDelete extends JPanel {
         cancel.setBounds(205, 150, 100, 50);
         cancel.setFont(font);
         cancel.setActionCommand("cancel");
-        ActionListener cancelListener = new CancelListener(this, (ButtonsListener) listener);
+        ActionListener cancelListener = new CancelListener(this, listener);
         cancel.addActionListener(cancelListener);
         add(cancel);
     }
